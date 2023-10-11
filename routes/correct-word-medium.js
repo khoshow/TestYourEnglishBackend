@@ -17,7 +17,7 @@ router.post(
   correctWordValidator,
   create
 );
-// router.get("/testList", list);
+router.get("/correct-words-medium", list);
 // router.get('/category/:slug', read);
 // router.delete('/category/:slug', requireSignin, adminMiddleware, remove);
 // router.get('/category-image/image/:slug', photo);
