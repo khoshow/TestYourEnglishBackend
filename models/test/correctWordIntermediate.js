@@ -34,5 +34,4 @@ const correctWordIntermediate = new mongoose.Schema({
     },
   ],
 });
-
-module.exports = mongoose.model("TestCorrectWordsMedium", correctWordIntermediate)
+module.exports = mongoose.model("TestCorrectWordIntermediate", correctWordIntermediate)

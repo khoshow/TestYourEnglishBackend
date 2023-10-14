@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const correctWordsAdvancedSchema = new mongoose.Schema({
+const correctWordAdvancedSchema = new mongoose.Schema({
   question: {
     type: String,
   },
@@ -17,6 +17,6 @@ const correctWordsAdvancedSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model(
-  "CorrectWordsAdvanced",
-  correctWordsAdvancedSchema
+  "CorrectWordAdvanced",
+  correctWordAdvancedSchema
 );

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const correctWordsMediumSchema = new mongoose.Schema({
+const correctWordIntermediateSchema = new mongoose.Schema({
   question: {
     type: String,
     required: true,
@@ -32,4 +32,4 @@ const correctWordsMediumSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("CorrectWordsMedium", correctWordsMediumSchema);
+module.exports = mongoose.model("CorrectWordsMedium", correctWordIntermediateSchema);

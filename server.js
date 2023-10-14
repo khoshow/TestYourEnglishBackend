@@ -10,7 +10,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const testTypeRoutes = require("./routes/testType");
 const vocabularyRoutes = require("./routes/vocabulary")
-const correctWordRoutes = require("./routes/correct-word-medium")
+const correctWordRoutes = require("./routes/correctWordIntermediate")
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
