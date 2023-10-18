@@ -13,7 +13,7 @@ const {
 const { preSignup, signup, signin } = require("../controllers/auth");
 router.post('/signin', userSigninValidator, runValidation, signin);
 // router.get('/signout');
-
+// router.get("/username-availability/:slug", usernameAvailability)
 router.post("/pre-signup", userSignupValidator, runValidation, preSignup);
 router.post("/signup", signup);
 

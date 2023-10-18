@@ -204,7 +204,7 @@ exports.requireSignin = (req, res, next) => {
 
     // Attach the user information to the request for later use
     req.user = decoded;
-   
+
     // Continue to the next middleware or route
     next();
   } catch (error) {
@@ -228,7 +228,7 @@ exports.authMiddleware = (req, res, next) => {
 exports.adminMiddleware = (req, res, next) => {
   const adminUserId = req.user._id;
   console.log("Req.user", adminUserId);
- 
+
   // console.log("Req token", req);
   User.findById({ _id: adminUserId })
     .then((user) => {
@@ -252,6 +252,11 @@ exports.adminMiddleware = (req, res, next) => {
         error: err,
       });
     });
+};
+
+exports.usernameAvailability = (req, res) => {
+  console.log("Username", req.body.username);
+  // return "hello"
 };
 
 exports.canUpdateDeleteBlog = (req, res, next) => {

@@ -128,7 +128,13 @@ exports.getTestNo = async (req, res) => {
     const documents = await TestCorrectWordIntermediate.findOne({}).skip(
       testNo
     );
-
+    if (documents === null) {
+      return res.status(500).json({
+        error:
+          "Ooops! Seems like you are trying to explore something which is still unavailable.",
+      });
+    }
+    console.log("Doc", documents);
     res.json(documents);
   } catch (err) {
     console.error(err);
