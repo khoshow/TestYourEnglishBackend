@@ -13,13 +13,15 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.preSignup = (req, res) => {
   const { name, email, password } = req.body;
-
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+  console.log("name", name);
+  console.log("Env", process.env.SENDGRID_API_KEY);
+  User.findOne({ email: email.toLowerCase() }).then((user) => {
     if (user) {
       return res.status(400).json({
         error: "Email is taken",
       });
     }
+    console.log("user", name, email);
     const token = jwt.sign(
       { name, email, password },
       process.env.JWT_ACCOUNT_ACTIVATION,
@@ -50,6 +52,9 @@ exports.preSignup = (req, res) => {
       })
       .catch((error) => {
         console.log("error", error);
+        return res.status(400).json({
+          error: error,
+        });
       });
   });
 };
@@ -87,51 +92,52 @@ exports.preSignup = (req, res) => {
 exports.signup = (req, res) => {
   const token = req.body.token;
   if (token) {
-    TempImage.findOne({ name: "Developer" }).exec((err, tempPhoto) => {
-      if (err || !tempPhoto) {
-        return res.status(400).json({
-          error: "Profile Photo not found",
-        });
-      } else {
-        jwt.verify(
-          token,
+    // TempImage.findOne({ name: "Developer" }).exec((err, tempPhoto) => {
+    //   if (err || !tempPhoto) {
+    //     return res.status(400).json({
+    //       error: "Profile Photo not found",
+    //     });
+    //   } else {
+    jwt.verify(
+      token,
 
-          process.env.JWT_ACCOUNT_ACTIVATION,
-          function (err, decoded) {
-            if (err) {
-              return res.status(401).json({
-                error: "Expired Link. Signup Again",
-              });
-            }
-            const { photo } = tempPhoto;
-            // console.log("BCK: " + photo);
-            // console.log("BCKTem: " + tempPhoto);
-            const { name, email, password } = jwt.decode(token);
-            let username = shortId.generate();
-            // let photo = myProfilePhoto();
-            let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-            const user = new User({
-              name,
-              email,
-              password,
-              profile,
-              username,
-              photo,
+      process.env.JWT_ACCOUNT_ACTIVATION,
+      function (err, decoded) {
+        if (err) {
+          return res.status(401).json({
+            error: "Expired Link. Signup Again",
+          });
+        }
+        // const { photo } = tempPhoto;
+        // console.log("BCK: " + photo);
+        // console.log("BCKTem: " + tempPhoto);
+        const { name, email, password } = jwt.decode(token);
+        let username = shortId.generate();
+        // let photo = myProfilePhoto();
+        let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+        const user = new User({
+          name,
+          email,
+          password,
+          profile,
+          username,
+        });
+        user
+          .save()
+          .then(() => {
+            res.json({
+              message: "Signup Success! Please sign in.",
             });
-            user.save((err, user) => {
-              if (err) {
-                return res.status(401).json({
-                  error: errorHandler(err),
-                });
-              }
-              return res.json({
-                message: "Signup Success! Please sign in.",
-              });
+          })
+          .catch((err) => {
+            return res.status(401).json({
+              error: errorHandler(err),
             });
-          }
-        );
+          });
       }
-    });
+    );
+    //   }
+    // });
   } else {
     return res.json({
       message: "Something went wrong. Please try again",
@@ -390,44 +396,36 @@ exports.googleLogin = (req, res) => {
               user: { _id, email, name, role, username },
             });
           } else {
-            TempImage.findOne({ name: "Developer" }).exec((err, tempPhoto) => {
-              if (err || !tempPhoto) {
-                return res.status(401).json({
-                  error: "Profile Photo Not Found",
-                });
-              } else {
-                let username = shortId.generate();
-                let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-                let password = jti;
-                const { photo } = tempPhoto;
-                user = new User({
-                  name,
-                  email,
-                  profile,
-                  username,
-                  photo,
-                  password,
-                });
-                user.save((err, data) => {
-                  if (err) {
-                    return res.status(400).json({
-                      error: errorHandler(err),
-                    });
-                  }
+            let username = shortId.generate();
+            let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+            let password = jti;
 
-                  const token = jwt.sign(
-                    { _id: data._id },
-                    process.env.JWT_SECRET,
-                    { expiresIn: "1d" }
-                  );
-                  res.cookie("token", token, { expiresIn: "1d" });
-                  const { _id, email, name, role, username } = user;
-                  return res.json({
-                    token,
-                    user: { _id, email, name, role, username },
-                  });
+            user = new User({
+              name,
+              email,
+              profile,
+              username,
+
+              password,
+            });
+            user.save((err, data) => {
+              if (err) {
+                return res.status(400).json({
+                  error: errorHandler(err),
                 });
               }
+
+              const token = jwt.sign(
+                { _id: data._id },
+                process.env.JWT_SECRET,
+                { expiresIn: "1d" }
+              );
+              res.cookie("token", token, { expiresIn: "1d" });
+              const { _id, email, name, role, username } = user;
+              return res.json({
+                token,
+                user: { _id, email, name, role, username },
+              });
             });
           }
         });

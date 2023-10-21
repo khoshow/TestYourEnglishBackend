@@ -16,6 +16,8 @@ const app = express();
 app.use(express.static(__dirname + "/public"));
 
 let productionOrDevelopment;
+console.log("prod or ", process.env.NODE_ENV );
+console.log("Ur", process.env.DATABASE_LOCAL);
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
 } else if (process.env.NODE_ENV == "development") {

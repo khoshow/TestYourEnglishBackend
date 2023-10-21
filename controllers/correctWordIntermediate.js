@@ -38,9 +38,17 @@ exports.create = async (req, res) => {
 
   const data = await TestCorrectWordIntermediate.findOne({}).sort({ _id: -1 });
 
-  const addToTest1 = async () => {
+  const addToTest1 = async (data) => {
+    let questionNoLength;
+    console.log("data", data);
+    if (data === null) {
+      questionNoLength = 0;
+     
+    } else {
+      questionNoLength = data.questionNo.length;
+    }
     console.log("last Data", data);
-    console.log("last Data length of Questions", data.questionNo.length);
+    console.log("last Data length of Questions", questionNoLength);
     console.log("Doc Count", docCount);
     const newQuestion = {
       question: question,
@@ -49,7 +57,7 @@ exports.create = async (req, res) => {
       wrongOption2: wrongOption2,
       wrongOption3: wrongOption3,
     };
-    if (data.questionNo.length !== 0 && data.questionNo.length < 4) {
+    if (questionNoLength !== 0 && data.questionNo.length < 4) {
       data.questionNo.push(newQuestion);
 
       await data
@@ -61,7 +69,7 @@ exports.create = async (req, res) => {
         .catch((err) => {
           console.log("Error", err);
         }); // Save the updated data
-    } else if (data.questionNo.length !== 0 && data.questionNo.length == 4) {
+    } else if (questionNoLength !== 0 && data.questionNo.length == 4) {
       const modelLength = TestCorrectWordIntermediate.length;
       console.log("modelLength", modelLength);
       let newNumber = docCount + 1;
@@ -95,7 +103,7 @@ exports.create = async (req, res) => {
   try {
     await correctWord.save();
 
-    addToTest1();
+    addToTest1(data);
   } catch (error) {
     console.error("Error:", error);
   }
