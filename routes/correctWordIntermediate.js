@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { create, list, getTestNo } = require("../controllers/correctWordIntermediate");
 var { expressjwt } = require("express-jwt");
 // validators
 const { runValidation } = require("../validators");
 const { correctWordValidator } = require("../validators/correctWordValidator");
 // const { requireSignin } = require("../controllers/auth/rsignin");
 const { requireSignin,adminMiddleware } = require("../controllers/auth");
+const { create, list, getTestNo } = require("../controllers/Vocabulary/correctWord/intermediate/crud")
+
+const {updateScore, getTestData} = require("../controllers/Vocabulary/correctWord/intermediate/scores")
 
 router.post(
   "/correct-word-intermediate",
@@ -19,6 +21,8 @@ router.post(
 );
 router.get("/correct-words-intermediate", list);
 router.get("/correct-words-intermediate/:slug", getTestNo)
+router.put("/correct-words-intermediate/score-update/:slug",requireSignin, updateScore)
+router.get("/correct-words-intermediate/user-test-data/:slug", requireSignin, getTestData)
 // router.get('/category/:slug', read);
 // router.delete('/category/:slug', requireSignin, adminMiddleware, remove);
 // router.get('/category-image/image/:slug', photo);
