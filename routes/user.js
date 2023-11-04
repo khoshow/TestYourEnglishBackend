@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const { signup, signin, signout, requireSignin, adminMiddleware, forgotPassword, resetPassword, preSignup, googleLogin} = require('../controllers/auth');
+const { requireSignin} = require('../controllers/auth');
+const {getUserScore} = require("../controllers/userInfo")
 // const {tempPhoto, getTempPhoto} = require("../controllers/temporaryProfile")
 // const {forgotPasswordValidator, resetPasswordValidator} = require("../validators/auth")
 // // validators
@@ -9,5 +10,6 @@ const router = express.Router();
 
 
 router.get('/getUser');
+router.get('/get-user-scores/:user', requireSignin, getUserScore)
 
 module.exports = router;
