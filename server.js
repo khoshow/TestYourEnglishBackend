@@ -9,15 +9,16 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const testTypeRoutes = require("./routes/testType");
-const vocabularyRoutes = require("./routes/vocabulary")
-const correctWordRoutes = require("./routes/correctWordIntermediate")
-const ranking = require("./routes/ranking")
+const vocabularyRoutes = require("./routes/vocabulary");
+const correctWordRoutes = require("./routes/correctWordIntermediate");
+const ranking = require("./routes/ranking");
+const profile = require("./routes/userProfile");
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
 
 let productionOrDevelopment;
-console.log("prod or ", process.env.NODE_ENV );
+console.log("prod or ", process.env.NODE_ENV);
 console.log("Ur", process.env.DATABASE_LOCAL);
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
@@ -33,26 +34,21 @@ mongoose
   });
 
 app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  })
-);
+app.use(cors({ origin: '*' }));
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-app.use("/api", testTypeRoutes)
-app.use("/api", vocabularyRoutes)
-app.use("/api", correctWordRoutes)
-app.use("/api", ranking)
+app.use("/api", testTypeRoutes);
+app.use("/api", vocabularyRoutes);
+app.use("/api", correctWordRoutes);
+app.use("/api", ranking);
+app.use("/api", profile);
 
 const port = process.env.PORT || 8020;
-app.listen(port, ()=>{
-    console.log(`Server running on port ${port}`)
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

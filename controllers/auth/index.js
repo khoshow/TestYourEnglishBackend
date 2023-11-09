@@ -196,7 +196,7 @@ exports.signout = (req, res) => {
 exports.requireSignin = (req, res, next) => {
   // Get the token from the request headers
   const token = req.headers.authorization.split(" ")[1];
-
+console.log("header tok", token);
   // Check if the token is missing
   if (!token) {
     return res

@@ -46,7 +46,31 @@ const userSchema = new mongoose.Schema(
     },
     resetPasswordLink: {
       data: String,
-    //   default: "",
+      //   default: "",
+    },
+    status: {
+      type: String,
+      max: 500,
+    },
+    message: {
+      type: String,
+      max: 2500,
+    },
+    sex: {
+      type: String,
+    },
+    dob: {
+      type: Date,
+    },
+    country: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    about: {
+      type: String,
+      max: 1500,
     },
   },
   { timestamp: true }
