@@ -40,9 +40,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    photo: {
-      data: Buffer,
-      contentType: String,
+    photoUrl: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dreunylt8/image/upload/v1699615502/testMyEnglishOnline/Profile/apygkohkbsukvc7dupnp.svg",
     },
     resetPasswordLink: {
       data: String,

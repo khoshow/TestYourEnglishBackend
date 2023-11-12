@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const multer = require("multer");
 const fs = require("fs-extra");
+const cloudinary = require("cloudinary").v2;
+const jwt = require("jsonwebtoken");
 
 exports.profileUpdateStatus = (req, res) => {
   const userId = req.user._id;
@@ -61,7 +63,21 @@ exports.profileUpdateUsername = (req, res) => {
     .then((updatedUser) => {
       if (updatedUser) {
         console.log(`User's name updated to: ${updatedUser.status}`);
-        res.json(updatedUser);
+        const token = jwt.sign(
+          { _id: updatedUser._id },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1d",
+          }
+        );
+        res.cookie("token", token, { expiresIn: "1d" });
+        const { _id, username, name, email, role } = updatedUser;
+
+        res.json({
+          token,
+          updatedUser,
+        });
+        // res.json(updatedUser);
       } else {
         console.log("User not found");
       }
@@ -209,7 +225,11 @@ exports.profileUpdateAbout = (req, res) => {
 
 //   res.json("hello");
 // };
-
+cloudinary.config({
+  cloud_name: "dreunylt8",
+  api_key: "774751474439835",
+  api_secret: "***************************",
+});
 const storage = multer.diskStorage({
   destination: "./uploads",
   filename: function (req, file, cb) {
@@ -247,42 +267,170 @@ const upload = multer({ storage: storage });
 //   }
 // });
 
-exports.profileUpdatePhoto = (req, res) => {
+// exports.profileUpdatePhoto = (req, res) => {
+//   const userId = req.user._id;
+//   console.log("user", userId);
+//   try {
+//     upload.single("photo")(req, res, async (err) => {
+//       if (err) {
+//         return res.status(400).json({ error: "Error uploading file." });
+//       }
+//       if (!req.file) {
+//         return res.status(400).json({ error: "No file uploaded." });
+//       }
+//       const buffer = await fs.readFile(req.file.path);
+//       const photo = {
+//         data: buffer,
+//         contentType: req.file.mimetype,
+//       };
+//       User.findByIdAndUpdate(userId, { photo }, { new: true })
+//         .then((updatedUser) => {
+//           if (updatedUser) {
+//             console.log(`User's name updated to: ${updatedUser.about}`);
+
+//             fs.unlink(req.file.path);
+//             res.json(updatedUser);
+//           } else {
+//             console.log("User not found");
+//           }
+//         })
+//         .catch((error) => {
+//           console.error(error);
+//         })
+//         .finally(() => {
+//           fs.unlink(req.file.path);
+//         });
+//     });
+//   } catch (error) {
+//     console.error("Error uploading photo:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+// exports.profileUpdatePhoto = (req, res) => {
+//   const userId = req.user._id;
+//   console.log("user", userId);
+//   try {
+//     upload.single("photo")(req, res, async (err) => {
+//       if (err) {
+//         return res.status(400).json({ error: "Error uploading file." });
+//       }
+//       if (!req.file) {
+//         return res.status(400).json({ error: "No file uploaded." });
+//       }
+//       const buffer = await fs.readFile(req.file.path);
+//       let imageBufferData = buffer; // Your base64-encoded image data here
+//       const imageMimeType = req.file.mimetype;
+//       if (typeof imageBufferData !== "string") {
+//         imageBufferData = imageBufferData.toString();
+//       }
+
+//       const base64Data = imageBufferData.replace(
+//         /^data:image\/\w+;base64,/,
+//         ""
+//       );
+
+//       // Create a buffer from the base64 data
+//       const imageBuffer = Buffer.from(base64Data, "base64");
+
+//       // Generate a unique filename for the image (optional)
+//       const uniqueFilename = `${Date.now()}.${imageMimeType.split("/")[1]}`;
+
+//       // Write the buffer data to a file
+//       fs.writeFile(uniqueFilename, imageBuffer, "binary", (err) => {
+//         if (err) throw err;
+//         console.log("Image has been saved to", uniqueFilename);
+//       });
+
+//       const photo = {
+//         data: uniqueFilename,
+//         contentType: imageMimeType,
+//       };
+
+//       User.findByIdAndUpdate(userId, { photo }, { new: true })
+//         .then((updatedUser) => {
+//           if (updatedUser) {
+//             console.log(`User's name updated to: ${updatedUser.photo}`);
+
+//             res.json(updatedUser);
+//             // fs.unlink(req.file.path);
+//           } else {
+//             console.log("User not found");
+//           }
+//         })
+//         .catch((error) => {
+//           console.error(error);
+//         })
+//         .finally(() => {
+//           fs.unlink(req.file.path);
+//         });
+//     });
+//   } catch (error) {
+//     console.error("Error uploading photo:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_KEY,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
+});
+
+exports.profileUpdatePhoto = async (req, res) => {
   const userId = req.user._id;
   console.log("user", userId);
+
   try {
     upload.single("photo")(req, res, async (err) => {
       if (err) {
         return res.status(400).json({ error: "Error uploading file." });
       }
+
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded." });
       }
-      const buffer = await fs.readFile(req.file.path);
-      const photo = {
-        data: buffer,
-        contentType: req.file.mimetype,
-      };
-      User.findByIdAndUpdate(userId, { photo }, { new: true })
-        .then((updatedUser) => {
-          if (updatedUser) {
-            console.log(`User's name updated to: ${updatedUser.about}`);
 
-            fs.unlink(req.file.path);
-            res.json(updatedUser);
-          } else {
-            console.log("User not found");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          fs.unlink(req.file.path);
-        });
+      const buffer = await fs.promises.readFile(req.file.path);
+
+      // Upload image directly to Cloudinary using a Promise
+      const cloudinaryResponse = await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            { folder: "/testMyEnglishOnline/Profile" }, // Replace with your desired folder name
+            (error, result) => {
+              if (error) {
+                console.error("Error uploading image to Cloudinary:", error);
+                reject(error);
+              } else {
+                console.log("Image uploaded to Cloudinary:", result);
+                resolve(result);
+              }
+            }
+          )
+          .end(buffer);
+      });
+
+      // Update the user's photo information in the database
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          photoUrl: cloudinaryResponse.secure_url,
+        },
+        { new: true }
+      );
+
+      if (updatedUser) {
+        res.json(updatedUser);
+      } else {
+        console.log("User not found");
+      }
+
+      // Cleanup: Delete the local file
+      fs.unlink(req.file.path);
     });
   } catch (error) {
-    console.error("Error uploading photo:", error);
+    console.error("Error updating user profile:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -40,16 +40,14 @@ exports.create = async (req, res) => {
 
   const addToTest1 = async (data) => {
     let questionNoLength;
-    console.log("data", data);
+   
     if (data === null) {
       questionNoLength = 0;
      
     } else {
       questionNoLength = data.questionNo.length;
     }
-    console.log("last Data", data);
-    console.log("last Data length of Questions", questionNoLength);
-    console.log("Doc Count", docCount);
+  
     const newQuestion = {
       question: question,
       correctOption: correctOption,

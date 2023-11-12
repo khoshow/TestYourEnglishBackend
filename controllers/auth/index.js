@@ -32,11 +32,11 @@ exports.preSignup = (req, res) => {
     const emailData = {
       from: process.env.EMAIL_FROM,
       to: email,
-      subject: `Nagamei account activation link`,
+      subject: `Test My English Online account activation link`,
       html: `
     <p>Please use the following link to activate your acccount:</p>
     <a ></a>
-    <a href="${process.env.CLIENT_URL}/auth/account/activate/${token}">${process.env.CLIENT_URL}/auth/account/activate/${token}</a>
+    <a href="${process.env.CLIENT_URL}/auth/account/activate/${token}">${process.env.CLIENT_URL}/auth/account/activate</a>
     <hr />
     <p>This email may contain sensitive information<p>
     <p>https://nagamei.com</p>
@@ -167,11 +167,11 @@ exports.signin = (req, res) => {
         expiresIn: "1d",
       });
       res.cookie("token", token, { expiresIn: "1d" });
-      const { _id, username, name, email, role } = user;
+      const { _id, username, name, email, role, photoUrl } = user;
 
       res.json({
         token,
-        user: { _id, username, name, email, role },
+        user: { _id, username, name, email, role, photoUrl },
       });
     })
     .catch((err) => {
@@ -196,7 +196,7 @@ exports.signout = (req, res) => {
 exports.requireSignin = (req, res, next) => {
   // Get the token from the request headers
   const token = req.headers.authorization.split(" ")[1];
-console.log("header tok", token);
+  console.log("header tok", token);
   // Check if the token is missing
   if (!token) {
     return res

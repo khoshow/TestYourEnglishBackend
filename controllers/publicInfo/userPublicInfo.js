@@ -1,7 +1,7 @@
-const UserScore = require("../models/userScores/scores");
-const User = require("../models/user");
+const UserScore = require("../../models/userScores/scores");
+const User = require("../../models/user");
 
-exports.getUserScore = (req, res) => {
+exports.getPublicUserScore = (req, res) => {
   const user = req.params.user;
   console.log("back User Id", user);
   UserScore.findOne({ user: user })
@@ -33,7 +33,7 @@ exports.getUserScore = (req, res) => {
     });
 };
 
-exports.getUserProfile = (req, res) => {
+exports.getUserPublicProfile = (req, res) => {
   const userId = req.params.user;
   User.findById(userId)
     .then((user) => {

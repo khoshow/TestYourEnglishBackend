@@ -13,6 +13,7 @@ const vocabularyRoutes = require("./routes/vocabulary");
 const correctWordRoutes = require("./routes/correctWordIntermediate");
 const ranking = require("./routes/ranking");
 const profile = require("./routes/userProfile");
+const publicAccess = require("./routes/public/publicData")
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -47,6 +48,7 @@ app.use("/api", vocabularyRoutes);
 app.use("/api", correctWordRoutes);
 app.use("/api", ranking);
 app.use("/api", profile);
+app.use("/api", publicAccess);
 
 const port = process.env.PORT || 8020;
 app.listen(port, () => {
