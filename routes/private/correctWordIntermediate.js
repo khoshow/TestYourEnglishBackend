@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 var { expressjwt } = require("express-jwt");
 // validators
-const { runValidation } = require("../validators");
-const { correctWordValidator } = require("../validators/correctWordValidator");
-// const { requireSignin } = require("../controllers/auth/rsignin");
-const { requireSignin,adminMiddleware } = require("../controllers/auth");
-const { create, list, getTestNo } = require("../controllers/Vocabulary/correctWord/intermediate/crud")
+const { runValidation } = require("../../validators");
+const { correctWordValidator } = require("../../validators/correctWordValidator");
+// const { requireSignin } = require("../../controllers/auth/rsignin");
+const { requireSignin,adminMiddleware } = require("../../controllers/auth");
+const { create, list, getTestNo } = require("../../controllers/categories/correctWord/intermediate/crud")
 
-const {updateScore, getTestData} = require("../controllers/Vocabulary/correctWord/intermediate/scores")
+const {updateScore, getTestData} = require("../../controllers/categories/correctWord/intermediate/scores")
 
 router.post(
   "/correct-word-intermediate",

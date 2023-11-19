@@ -3,10 +3,17 @@ const router = express.Router();
 
 const {
   getPublicUserScore,
-} = require("../../controllers/publicInfo/userPublicInfo");
-const { getRanking } = require("../../controllers/publicInfo/ranking");
+} = require("../../controllers/publicInfo/scoresRanking");
+const {
+  getTotalTestNoCorrectWordIntermediate,
+} = require("../../controllers/publicInfo/correctWordIntermediate/here");
+const { getRanking } = require("../../controllers/publicInfo/scoresRanking");
 
 router.get("/get-ranking/:slug", getRanking);
-router.get("/get-public-display-user-scores/:user", getPublicUserScore);
+router.get("/get-public-display-user-scores/:username", getPublicUserScore);
+router.get(
+  "/total-test/correct-word-intermediate",
 
+  getTotalTestNoCorrectWordIntermediate
+);
 module.exports = router;

@@ -10,7 +10,7 @@ exports.profileUpdateStatus = (req, res) => {
   User.findByIdAndUpdate(userId, { status: newStatus }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.status}`);
+       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -27,7 +27,7 @@ exports.profileUpdateMessage = (req, res) => {
   User.findByIdAndUpdate(userId, { message: newMessage }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.message}`);
+      
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -44,7 +44,7 @@ exports.profileUpdateName = (req, res) => {
   User.findByIdAndUpdate(userId, { name: newName }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.name}`);
+   
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -62,7 +62,7 @@ exports.profileUpdateUsername = (req, res) => {
   User.findByIdAndUpdate(userId, { username: newUsername }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.status}`);
+      
         const token = jwt.sign(
           { _id: updatedUser._id },
           process.env.JWT_SECRET,
@@ -93,7 +93,7 @@ exports.profileUpdateSex = (req, res) => {
   User.findByIdAndUpdate(userId, { Sex: newSex }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.sex}`);
+      
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -110,7 +110,7 @@ exports.profileUpdateDob = (req, res) => {
   User.findByIdAndUpdate(userId, { dob: newDob }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.dob}`);
+       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -127,7 +127,7 @@ exports.profileUpdateCountry = (req, res) => {
   User.findByIdAndUpdate(userId, { country: newCountry }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.country}`);
+      
         res.json(updatedUser);
       } else {
         console.log("User not found");

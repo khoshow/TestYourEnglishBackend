@@ -3,13 +3,13 @@ const User = require("../models/user");
 
 exports.getUserScore = (req, res) => {
   const user = req.params.user;
-  console.log("back User Id", user);
+
   UserScore.findOne({ user: user })
     .then((data) => {
       console.log("user Detail", data);
 
       const userScores = {
-        correctIntermediate: {
+        correctWordIntermediate: {
           scores:
             data.correctWordIntermediate &&
             data.correctWordIntermediate.score !== null
@@ -19,6 +19,18 @@ exports.getUserScore = (req, res) => {
             data.correctWordIntermediate &&
             data.correctWordIntermediate.rank !== null
               ? data.correctWordIntermediate.rank
+              : "N/A",
+        },
+        correctWordAdvanced: {
+          scores:
+            data.correctWordAdvanced &&
+            data.correctWordAdvanced.score !== null
+              ? data.correctWordAdvanced.score
+              : "N/A",
+          rank:
+            data.correctWordAdvanced &&
+            data.correctWordAdvanced.rank !== null
+              ? data.correctWordAdvanced.rank
               : "N/A",
         },
       };

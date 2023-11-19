@@ -14,7 +14,7 @@ exports.updateScore = async (req, res) => {
       username:username,
 
       $push: {
-        "correctWordIntermediate.testArray": {
+        "correctWordAdvanced.testArray": {
           testId: testId,
           testNumber: testNo,
           testGiven: true,
@@ -34,18 +34,18 @@ exports.updateScore = async (req, res) => {
     .then(async (updatedData) => {
       const documentCount = await UserScore.countDocuments({});
     
-      updatedData.correctWordIntermediate.score += scoreToBeAdded;
-      updatedData.correctWordIntermediate.noOfUsers = documentCount;
+      updatedData.correctWordAdvanced.score += scoreToBeAdded;
+      updatedData.correctWordAdvanced.noOfUsers = documentCount;
 
       await updatedData.save();
       const rank =
         (await UserScore.countDocuments({
-          "correctWordIntermediate.score": {
-            $gt: updatedData.correctWordIntermediate.score,
+          "correctWordAdvanced.score": {
+            $gt: updatedData.correctWordAdvanced.score,
           },
         })) + 1;
 
-      updatedData.correctWordIntermediate.rank = rank;
+      updatedData.correctWordAdvanced.rank = rank;
       await updatedData.save();
       
       res.status(200).json(updatedData);

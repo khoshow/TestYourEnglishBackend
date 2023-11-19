@@ -3,10 +3,10 @@ const User = require("../../models/user");
 
 exports.getPublicUserScore = (req, res) => {
   const user = req.params.user;
-  console.log("back User Id", user);
+  
   UserScore.findOne({ user: user })
     .then((data) => {
-      console.log("user Detail", data);
+     
 
       const userScores = {
         correctIntermediate: {

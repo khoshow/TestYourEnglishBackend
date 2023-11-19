@@ -3,6 +3,7 @@ const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const cookieParser = require("cookie-parser");
+
 const user = require("../../models/user");
 const { errorHandler } = require("../../helpers/dbErrorHandler");
 const _ = require("lodash");
@@ -13,15 +14,16 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.preSignup = (req, res) => {
   const { name, email, password } = req.body;
-  console.log("name", name);
-  console.log("Env", process.env.SENDGRID_API_KEY);
+
+  
   User.findOne({ email: email.toLowerCase() }).then((user) => {
     if (user) {
       return res.status(400).json({
         error: "Email is taken",
       });
     }
-    console.log("user", name, email);
+   
+    
     const token = jwt.sign(
       { name, email, password },
       process.env.JWT_ACCOUNT_ACTIVATION,
@@ -182,8 +184,11 @@ exports.signin = (req, res) => {
 };
 
 exports.signout = (req, res) => {
+  
+  
   res.clearCookie("token");
   res.json({
+    success: true,
     message: "Signout success",
   });
 };
@@ -196,7 +201,7 @@ exports.signout = (req, res) => {
 exports.requireSignin = (req, res, next) => {
   // Get the token from the request headers
   const token = req.headers.authorization.split(" ")[1];
-  console.log("header tok", token);
+
   // Check if the token is missing
   if (!token) {
     return res
@@ -233,7 +238,7 @@ exports.authMiddleware = (req, res, next) => {
 
 exports.adminMiddleware = (req, res, next) => {
   const adminUserId = req.user._id;
-  console.log("Req.user", adminUserId);
+
 
   // console.log("Req token", req);
   User.findById({ _id: adminUserId })
@@ -261,7 +266,8 @@ exports.adminMiddleware = (req, res, next) => {
 };
 
 exports.usernameAvailability = (req, res) => {
-  console.log("Username", req.body.username);
+  
+  
   // return "hello"
 };
 
@@ -378,13 +384,15 @@ exports.googleLogin = (req, res) => {
   client
     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
     .then((response) => {
-      console.log(response);
+      
+      
       const { email_verified, name, email, jti } = response.payload;
 
       if (email_verified) {
         User.findOne({ email }).exec((err, user) => {
           if (user) {
-            console.log(user);
+          
+            
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
               expiresIn: "1d",
             });

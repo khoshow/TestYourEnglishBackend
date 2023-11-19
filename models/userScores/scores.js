@@ -85,6 +85,11 @@ const userScoreSchema = new Schema({
     ref: "User", // Reference to the User model if you have one
     required: true,
   },
+  username: {
+    type: String,
+    ref: "User", // Reference to the User model if you have one
+    required: true,
+  },
   totalScore: {
     type: Number,
   },

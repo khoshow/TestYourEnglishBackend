@@ -15,6 +15,14 @@ const ranking = require("./routes/ranking");
 const profile = require("./routes/userProfile");
 const publicAccess = require("./routes/public/publicData")
 
+const privateCorrectWordIntermediate = require("./routes/private/correctWordIntermediate")
+const privateCorrectWordAdvanced = require("./routes/private/correctWordAdvanced")
+const privateCorrectMeaningIntermediate=require("./routes/private/correctMeaningIntermediate")
+const privateCorrectMeaningAdvanced= require("./routes/private/correctMeaningAdvanced")
+const privateSynonymsIntermediate= require("./routes/private/synonymsIntermediate")
+const privateSynonymsAdvanced=require("./routes/private/synonymsAdvanced")
+
+
 const app = express();
 app.use(express.static(__dirname + "/public"));
 
@@ -49,6 +57,14 @@ app.use("/api", correctWordRoutes);
 app.use("/api", ranking);
 app.use("/api", profile);
 app.use("/api", publicAccess);
+
+app.use("/api", privateCorrectWordIntermediate)
+app.use("/api", privateCorrectWordAdvanced);
+app.use("/api", privateCorrectMeaningIntermediate);
+app.use("/api", privateCorrectMeaningAdvanced);
+app.use("/api", privateSynonymsIntermediate);
+app.use("/api", privateSynonymsAdvanced);
+
 
 const port = process.env.PORT || 8020;
 app.listen(port, () => {

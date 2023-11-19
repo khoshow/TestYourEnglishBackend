@@ -34,8 +34,7 @@ exports.getRanking = (req, res) => {
     .then((users) => {
       // Now the 'users' array is sorted by correctWordIntermediate.rank in ascending order
       const processedData = [];
-      console.log("Rank", users);
-      console.log("selectQuery", selectQuery);
+    
       users.forEach((item) => {
         const userId = item.user._id;
         const userName = item.user.name;
@@ -52,7 +51,7 @@ exports.getRanking = (req, res) => {
         processedData.push(processedItem);
       });
 
-      console.log("score", processedData);
+    
       res.json(processedData);
     })
     .catch((err) => {

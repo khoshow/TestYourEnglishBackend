@@ -1,11 +1,11 @@
-const CorrectWordIntermediate = require("../models/correctWord/intermediate");
-const TestCorrectWordIntermediate = require("../models/test/correctWordIntermediate");
-// const Blog = require("../models/blog");
+const CorrectMeaningIntermediate = require("../../../../models/categories/correctMeaning/intermediate");
+const TestCorrectMeaningIntermediate = require("../../../../models/test/correctMeaning/intermediate");
+
 const slugify = require("slugify");
 const formidable = require("formidable");
 const fs = require("fs");
 const _ = require("lodash");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const { errorHandler } = require("../../../../helpers/dbErrorHandler");
 
 exports.create = async (req, res) => {
   const { question, correctOption } = req.body;
@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     });
   }
 
-  let correctWord = new CorrectWordIntermediate({
+  let correctWord = new CorrectMeaningIntermediate({
     question: question,
     correctOption: correctOption,
     wrongOption1: wrongOption1,
@@ -27,25 +27,29 @@ exports.create = async (req, res) => {
     createdBy: req.user._id,
   });
 
-  const docCount = await TestCorrectWordIntermediate.countDocuments()
+  const docCount = await TestCorrectMeaningIntermediate.countDocuments()
     .then((count) => {
+      console.log("Count", count);
       return count;
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 
-  const data = await TestCorrectWordIntermediate.findOne({}).sort({ _id: -1 });
+  const data = await TestCorrectMeaningIntermediate.findOne({}).sort({ _id: -1 });
 
   const addToTest1 = async (data) => {
     let questionNoLength;
-
+    console.log("data", data);
     if (data === null) {
       questionNoLength = 0;
+     
     } else {
       questionNoLength = data.questionNo.length;
     }
-
+    console.log("last Data", data);
+    console.log("last Data length of Questions", questionNoLength);
+    console.log("Doc Count", docCount);
     const newQuestion = {
       question: question,
       correctOption: correctOption,
@@ -59,24 +63,25 @@ exports.create = async (req, res) => {
       await data
         .save()
         .then((data) => {
+          console.log("Question added to questionNo array:", newQuestion);
           res.json(data);
         })
         .catch((err) => {
           console.log("Error", err);
         }); // Save the updated data
     } else if (questionNoLength !== 0 && data.questionNo.length == 4) {
-      const modelLength = TestCorrectWordIntermediate.length;
-
+      const modelLength = TestCorrectMeaningIntermediate.length;
+      console.log("modelLength", modelLength);
       let newNumber = docCount + 1;
       const newQuizData = {
         testNo: "Test: " + newNumber,
         questionNo: [newQuestion],
         // createdBy: mongoose.Types.ObjectId(), // Replace with the actual user ID who created the quiz
       };
-      const addToTest = new TestCorrectWordIntermediate(newQuizData);
+      const addToTest = new TestCorrectMeaningIntermediate(newQuizData);
 
       const savedData = await addToTest.save();
-
+      console.log("Add a new test", savedData);
       res.json(savedData);
     } else {
       const newQuizData = {
@@ -84,16 +89,16 @@ exports.create = async (req, res) => {
         questionNo: [newQuestion],
       };
 
-      const addToTest = new TestCorrectWordIntermediate(newQuizData);
+      const addToTest = new TestCorrectMeaningIntermediate(newQuizData);
       const savedData = await addToTest.save();
-
+      console.log("Create the first test", savedData);
       res.json(savedData);
     }
   };
 
   // addToTest1();
 
-  // const addToTest = new TestCorrectWordIntermediate(newQuizData);
+  // const addToTest = new TestCorrectMeaningIntermediate(newQuizData);
 
   try {
     await correctWord.save();
@@ -106,7 +111,7 @@ exports.create = async (req, res) => {
 
 exports.list = (req, res) => {
   const projection = { name: 1, slug: 1 };
-  CorrectWordIntermediate.find({}, [
+  CorrectMeaningIntermediate.find({}, [
     "question",
     "correctOption",
     "wrongOption1",
@@ -128,7 +133,7 @@ exports.getTestNo = async (req, res) => {
 
     const testNo = parseInt(slug.split("-")[1] - 1);
 
-    const documents = await TestCorrectWordIntermediate.findOne({}).skip(
+    const documents = await TestCorrectMeaningIntermediate.findOne({}).skip(
       testNo
     );
     if (documents === null) {

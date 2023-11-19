@@ -35,34 +35,47 @@ exports.getRanking = (req, res) => {
     .then((users) => {
       // Now the 'users' array is sorted by correctWordIntermediate.rank in ascending order
       const processedData = [];
-      console.log("Rank", users);
-      console.log("selectQuery", selectQuery);
+      
       users.forEach((item) => {
-        console.log("Item", item);
+      
         const userId = item.user._id;
         const name = item.user.name;
         const username = item.user.username;
         const score = item.correctWordIntermediate.score;
         const rank = item.correctWordIntermediate.rank;
-        const photoUrl =  item.user.photoUrl;
+        const photoUrl = item.user.photoUrl;
 
         const processedItem = {
           section: selectQuery,
           userId: userId,
           name: name,
           username: username,
-          photoUrl:photoUrl,
+          photoUrl: photoUrl,
           score: score,
           rank: rank,
         };
         processedData.push(processedItem);
       });
 
-      console.log("score", processedData);
+      
       res.json(processedData);
     })
     .catch((err) => {
       console.error(err);
+      res.status(500).json({ error: err });
+    });
+};
+
+exports.getPublicUserScore = (req, res) => {
+  const username = req.params.username
+
+  UserScore.findOne({ username })
+    .then((user) => {
+    
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error("my err",err);
       res.status(500).json({ error: err });
     });
 };
