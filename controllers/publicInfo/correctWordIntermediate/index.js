@@ -1,4 +1,4 @@
-const CorrectWordIntermediate = require("../../../models/correctWord/intermediate");
+const CorrectWordIntermediate = require("../../../models/categories/correctWord/intermediate");
 
 exports.getTotalTestNoCorrectWordIntermediate = (req, res) => {
     console.log("Hello hhh");

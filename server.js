@@ -21,7 +21,7 @@ const privateCorrectMeaningIntermediate=require("./routes/private/correctMeaning
 const privateCorrectMeaningAdvanced= require("./routes/private/correctMeaningAdvanced")
 const privateSynonymsIntermediate= require("./routes/private/synonymsIntermediate")
 const privateSynonymsAdvanced=require("./routes/private/synonymsAdvanced")
-
+const testGivenOrNot = require("./routes/private/testGivenOrNot")
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -64,6 +64,7 @@ app.use("/api", privateCorrectMeaningIntermediate);
 app.use("/api", privateCorrectMeaningAdvanced);
 app.use("/api", privateSynonymsIntermediate);
 app.use("/api", privateSynonymsAdvanced);
+app.use("/api", testGivenOrNot)
 
 
 const port = process.env.PORT || 8020;

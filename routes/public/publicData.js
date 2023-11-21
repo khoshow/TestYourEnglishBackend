@@ -6,7 +6,7 @@ const {
 } = require("../../controllers/publicInfo/scoresRanking");
 const {
   getTotalTestNoCorrectWordIntermediate,
-} = require("../../controllers/publicInfo/correctWordIntermediate/here");
+} = require("../../controllers/publicInfo/correctWordIntermediate");
 const { getRanking } = require("../../controllers/publicInfo/scoresRanking");
 
 router.get("/get-ranking/:slug", getRanking);

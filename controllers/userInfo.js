@@ -6,7 +6,7 @@ exports.getUserScore = (req, res) => {
 
   UserScore.findOne({ user: user })
     .then((data) => {
-      console.log("user Detail", data);
+    
 
       const userScores = {
         correctWordIntermediate: {
