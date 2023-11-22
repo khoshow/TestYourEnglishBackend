@@ -13,15 +13,15 @@ const vocabularyRoutes = require("./routes/vocabulary");
 const correctWordRoutes = require("./routes/correctWordIntermediate");
 const ranking = require("./routes/ranking");
 const profile = require("./routes/userProfile");
-const publicAccess = require("./routes/public/publicData")
+const publicAccess = require("./routes/public/publicData");
 
-const privateCorrectWordIntermediate = require("./routes/private/correctWordIntermediate")
-const privateCorrectWordAdvanced = require("./routes/private/correctWordAdvanced")
-const privateCorrectMeaningIntermediate=require("./routes/private/correctMeaningIntermediate")
-const privateCorrectMeaningAdvanced= require("./routes/private/correctMeaningAdvanced")
-const privateSynonymsIntermediate= require("./routes/private/synonymsIntermediate")
-const privateSynonymsAdvanced=require("./routes/private/synonymsAdvanced")
-const testGivenOrNot = require("./routes/private/testGivenOrNot")
+const privateCorrectWordIntermediate = require("./routes/private/correctWordIntermediate");
+const privateCorrectWordAdvanced = require("./routes/private/correctWordAdvanced");
+const privateCorrectMeaningIntermediate = require("./routes/private/correctMeaningIntermediate");
+const privateCorrectMeaningAdvanced = require("./routes/private/correctMeaningAdvanced");
+const privateSynonymsIntermediate = require("./routes/private/synonymsIntermediate");
+const privateSynonymsAdvanced = require("./routes/private/synonymsAdvanced");
+const testGivenOrNot = require("./routes/private/testGivenOrNot");
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: "*" }));
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
@@ -58,13 +58,13 @@ app.use("/api", ranking);
 app.use("/api", profile);
 app.use("/api", publicAccess);
 
-app.use("/api", privateCorrectWordIntermediate)
+app.use("/api", privateCorrectWordIntermediate);
 app.use("/api", privateCorrectWordAdvanced);
 app.use("/api", privateCorrectMeaningIntermediate);
 app.use("/api", privateCorrectMeaningAdvanced);
 app.use("/api", privateSynonymsIntermediate);
 app.use("/api", privateSynonymsAdvanced);
-app.use("/api", testGivenOrNot)
+app.use("/api", testGivenOrNot);
 
 
 const port = process.env.PORT || 8020;
