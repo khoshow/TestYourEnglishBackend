@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { requireSignin } = require("../controllers/auth");
-const { getUserScore } = require("../controllers/userInfo");
+// const { getUserScore } = require("../controllers/userInfo");
 const {
   profileUpdateStatus,
   profileUpdateMessage,
@@ -21,7 +21,6 @@ const {
 // const { runValidation } = require('../validators');
 // const { userSignupValidator, userSigninValidator } = require('../validators/auth');
 
-
 router.put("/profile-update/status", requireSignin, profileUpdateStatus);
 router.put("/profile-update/message", requireSignin, profileUpdateMessage);
 router.put("/profile-update/name", requireSignin, profileUpdateName);
@@ -34,14 +33,8 @@ router.put("/profile-update/about", requireSignin, profileUpdateAbout);
 router.put(
   "/profile-update/photo",
   requireSignin,
- 
-  profileUpdatePhoto
-);
-router.get(
-  "/get-user-scores/:user",
-  requireSignin,
 
-  getUserScore
+  profileUpdatePhoto
 );
 
 module.exports = router;

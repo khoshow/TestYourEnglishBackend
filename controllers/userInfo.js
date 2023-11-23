@@ -1,7 +1,7 @@
 const UserScore = require("../models/userScores/scores");
 const User = require("../models/user");
 
-exports.getUserScore = (req, res) => {
+exports.getUserScoreCorrectWordIntermediate = (req, res) => {
   const user = req.params.user;
 
   UserScore.findOne({ user: user })

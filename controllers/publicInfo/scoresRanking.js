@@ -1,7 +1,7 @@
 const user = require("../../models/user");
 const UserScore = require("../../models/userScores/scores");
 
-exports.getRanking = (req, res) => {
+exports.getRankingCorrectWordIntermediate = (req, res) => {
   const slug = req.params.slug;
 
   let rankQuery;

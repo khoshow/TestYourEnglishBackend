@@ -7,14 +7,16 @@ const {
 const {
   getTotalTestNoCorrectWordIntermediate,
 } = require("../../controllers/publicInfo/correctWordIntermediate");
-const { getRanking } = require("../../controllers/publicInfo/scoresRanking");
+const { getRankingCorrectWordIntermediate } = require("../../controllers/publicInfo/scoresRanking");
 const {
   getCardMessages,
   getCorrectMessages,
   getWrongMessages,
 } = require("../../controllers/publicInfo/cardMessages");
-
-router.get("/get-ranking/:slug", getRanking);
+const {
+  getPublicProfile,
+} = require("../../controllers/publicInfo/userPublicInfo");
+router.get("/get-ranking-correct-word-intermediate/:slug", getRankingCorrectWordIntermediate);
 router.get("/get-public-display-user-scores/:username", getPublicUserScore);
 router.get(
   "/total-test/correct-word-intermediate",
@@ -25,5 +27,5 @@ router.get(
 router.get("/get-card-messages", getCardMessages);
 router.get("/get-correct-messages", getCorrectMessages);
 router.get("/get-wrong-messages", getWrongMessages);
-
+router.get("/getPublicProfile/:username", getPublicProfile);
 module.exports = router;
