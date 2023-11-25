@@ -1,9 +1,8 @@
-const user = require("../models/user");
-const UserScore = require("../models/userScores/scores");
+const user = require("../../models/user");
+const UserScore = require("../../models/userScores/scores");
 
-exports.getRanking = (req, res) => {
+exports.getCategoryRanking = (req, res) => {
   const slug = req.params.slug;
-
   let rankQuery;
   let selectQuery;
   let sortQuery = {};
@@ -28,30 +27,34 @@ exports.getRanking = (req, res) => {
     .sort(sortQuery)
     .select(fieldToSelectScore)
     .select(fieldToSelectRank)
-    .select("user")
-    .populate("user", "name")
+    .select("User")
+    .populate("user", "name username photoUrl")
+
     .limit(10)
     .then((users) => {
       // Now the 'users' array is sorted by correctWordIntermediate.rank in ascending order
       const processedData = [];
-    
+
       users.forEach((item) => {
         const userId = item.user._id;
-        const userName = item.user.name;
+        const name = item.user.name;
+        const username = item.user.username;
         const score = item.correctWordIntermediate.score;
         const rank = item.correctWordIntermediate.rank;
+        const photoUrl = item.user.photoUrl;
 
         const processedItem = {
           section: selectQuery,
           userId: userId,
-          userName: userName,
+          name: name,
+          username: username,
+          photoUrl: photoUrl,
           score: score,
           rank: rank,
         };
         processedData.push(processedItem);
       });
 
-    
       res.json(processedData);
     })
     .catch((err) => {

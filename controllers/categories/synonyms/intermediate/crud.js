@@ -1,5 +1,5 @@
 const SynonymsIntermediate = require("../../../../models/categories/synonyms/intermediate");
-const TestSynonymsIntermediate = require("../../../../models/test/synonyms/intermediate");
+const TestSynonymsIntermediate = require("../../../../models/tests/synonyms/intermediate");
 
 const slugify = require("slugify");
 const formidable = require("formidable");

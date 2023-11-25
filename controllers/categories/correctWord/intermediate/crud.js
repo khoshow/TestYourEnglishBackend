@@ -1,5 +1,5 @@
 const CorrectWordIntermediate = require("../../../../models/categories/correctWord/intermediate");
-const TestCorrectWordIntermediate = require("../../../../models/test/correctWord/intermediate");
+const TestCorrectWordIntermediate = require("../../../../models/tests/correctWord/intermediate");
 
 const slugify = require("slugify");
 const formidable = require("formidable");

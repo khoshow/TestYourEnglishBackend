@@ -1,5 +1,5 @@
 const CorrectMeaningAdvanced = require("../../../../models/categories/correctMeaning/advanced");
-const TestCorrectMeaningAdvanced = require("../../../../models/test/correctMeaning/advanced");
+const TestCorrectMeaningAdvanced = require("../../../../models/tests/correctMeaning/advanced");
 
 const slugify = require("slugify");
 const formidable = require("formidable");
@@ -139,7 +139,7 @@ exports.getTestNo = async (req, res) => {
     if (documents === null) {
       return res.status(500).json({
         error:
-          "Ooops! Seems like you are trying to explore something which is still unavailable.",
+          "Oops! It looks like you're attempting to explore something that is currently unavailable.",
       });
     }
     console.log("Doc", documents);

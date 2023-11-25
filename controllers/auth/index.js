@@ -15,15 +15,13 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.preSignup = (req, res) => {
   const { name, email, password } = req.body;
 
-  
   User.findOne({ email: email.toLowerCase() }).then((user) => {
     if (user) {
       return res.status(400).json({
         error: "Email is taken",
       });
     }
-   
-    
+
     const token = jwt.sign(
       { name, email, password },
       process.env.JWT_ACCOUNT_ACTIVATION,
@@ -36,12 +34,49 @@ exports.preSignup = (req, res) => {
       to: email,
       subject: `Test My English Online account activation link`,
       html: `
-    <p>Please use the following link to activate your acccount:</p>
-    <a ></a>
-    <a href="${process.env.CLIENT_URL}/auth/account/activate/${token}">${process.env.CLIENT_URL}/auth/account/activate</a>
-    <hr />
-    <p>This email may contain sensitive information<p>
-    <p>https://nagamei.com</p>
+      <div style="">
+      <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/style.css"
+      
+    />
+      <div class="container" style="";
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      color:#ffffffcc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align:left">
+     
+      <h1 style="color:#6C757D">Welcome to Test My English Online Community!</h1>
+      <hr/>
+      <h3 style="">Dear ${name},</h3>
+      <p style="">
+        Thank you for expressing interest in joining our English learning community.
+        We hope you'll find enjoyment and value in the learning journey with us.
+      </p>
+    
+      <p style="">Please click the button below to activate your acccount:</p>
+    
+      <a
+        href="${process.env.CLIENT_URL}/auth/account/activate/${token}"
+        class="button"
+        style=" display: inline-block;
+          padding: 10px 20px;
+          margin-top: 20px;
+          background-color: #B28900;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 3px;"
+      >
+        Activate Account
+      </a>
+    
+      <p style="">Best regards,</p>
+      <p style="">-Test My English Online team</p>
+    </div></div>
+      
     `,
     };
 
@@ -184,8 +219,6 @@ exports.signin = (req, res) => {
 };
 
 exports.signout = (req, res) => {
-  
-  
   res.clearCookie("token");
   res.json({
     success: true,
@@ -239,7 +272,6 @@ exports.authMiddleware = (req, res, next) => {
 exports.adminMiddleware = (req, res, next) => {
   const adminUserId = req.user._id;
 
-
   // console.log("Req token", req);
   User.findById({ _id: adminUserId })
     .then((user) => {
@@ -266,8 +298,6 @@ exports.adminMiddleware = (req, res, next) => {
 };
 
 exports.usernameAvailability = (req, res) => {
-  
-  
   // return "hello"
 };
 
@@ -384,15 +414,11 @@ exports.googleLogin = (req, res) => {
   client
     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
     .then((response) => {
-      
-      
       const { email_verified, name, email, jti } = response.payload;
 
       if (email_verified) {
         User.findOne({ email }).exec((err, user) => {
           if (user) {
-          
-            
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
               expiresIn: "1d",
             });

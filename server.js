@@ -8,10 +8,10 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
-const testTypeRoutes = require("./routes/testType");
+const contactForm = require("./routes/webContact/contactForm");
+
 const vocabularyRoutes = require("./routes/vocabulary");
-const correctWordRoutes = require("./routes/correctWordIntermediate");
-const ranking = require("./routes/ranking");
+
 const profile = require("./routes/userProfile");
 const publicAccess = require("./routes/public/publicData");
 
@@ -22,6 +22,7 @@ const privateCorrectMeaningAdvanced = require("./routes/private/correctMeaningAd
 const privateSynonymsIntermediate = require("./routes/private/synonymsIntermediate");
 const privateSynonymsAdvanced = require("./routes/private/synonymsAdvanced");
 const testGivenOrNot = require("./routes/private/testGivenOrNot");
+const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -51,10 +52,11 @@ app.use(cors({ origin: "*" }));
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-app.use("/api", testTypeRoutes);
+
+app.use("/api", contactForm);
+
 app.use("/api", vocabularyRoutes);
-app.use("/api", correctWordRoutes);
-app.use("/api", ranking);
+
 app.use("/api", profile);
 app.use("/api", publicAccess);
 
@@ -65,7 +67,7 @@ app.use("/api", privateCorrectMeaningAdvanced);
 app.use("/api", privateSynonymsIntermediate);
 app.use("/api", privateSynonymsAdvanced);
 app.use("/api", testGivenOrNot);
-
+app.use("/api", userCategoryScoreRank);
 
 const port = process.env.PORT || 8020;
 app.listen(port, () => {

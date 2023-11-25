@@ -1,5 +1,5 @@
-const SynonymsAdvanced = require("../../../../models/correctWord/intermediate");
-const TestSynonymsAdvanced = require("../../../../models/test/synonyms/advanced");
+const SynonymsAdvanced = require("../../../../models/categories/synonyms/advanced");
+const TestSynonymsAdvanced = require("../../../../models/tests/synonyms/advanced");
 
 const slugify = require("slugify");
 const formidable = require("formidable");

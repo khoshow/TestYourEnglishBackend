@@ -13,6 +13,8 @@ exports.testGiven = (req, res) => {
 
   console.log("Param Obj", paramsObject);
   let testCategory;
+  let selectQuery;
+  let selectQuery2;
   let testNo;
   //   let sortQuery = {};
   //   sortQuery[rankQuery] = 1;
@@ -20,15 +22,18 @@ exports.testGiven = (req, res) => {
   switch (paramsObject.testCategory) {
     case "correct-word-intermediate":
       testCategory = "correctWordIntermediate";
-      selectQuery = "correctWordIntermediate";
+      selectQuery = "correctWordIntermediate.testArray";
+      selectQuery2 = "correctWordIntermediate.testArray.$";
       break;
-    case "ranking-correct-word-advanced":
-      rankQuery = "correctWordAdvanced.score";
-      selectQuery = "correctWordAdvanced";
+    case "correct-word-advanced":
+      testCategory = "correctWordAdvanced";
+      selectQuery = "correctWordAdvanced.testArray";
+      selectQuery2 = "correctWordAdvanced.testArray.$";
       break;
     default:
-      rankQuery = "correctWordIntermediate.score";
-      selectQuery = "correctWordIntermediate";
+      testCategory = "correctWordIntermediate";
+      selectQuery = "correctWordIntermediate.testArray";
+      selectQuery2 = "correctWordIntermediate.testArray.$";
   }
 
   //   UserScores.find({
@@ -46,24 +51,27 @@ exports.testGiven = (req, res) => {
   //       res.json({ attempt: true,  });
   //     }
   //   });
-
+  console.log("Test Cat", testCategory);
+  console.log("testQuery", selectQuery);
+  console.log("slectquery2", selectQuery2);
   UserScores.findOne(
     {
       user: req.user._id,
-      "correctWordIntermediate.testArray": {
+      selectQuery: {
         $elemMatch: {
           testNumber: paramsObject.testNo,
         },
       },
     },
     {
-      "correctWordIntermediate.testArray.$": 1,
+      selectQuery2: 1,
     }
   ).then((data) => {
-    if (!(data)) {
+    console.log("Test Given Status", data);
+    if (!data) {
       res.json({ attempt: false });
     } else {
-      res.json({ attempt: true, data: data.correctWordIntermediate });
+      res.json({ attempt: true, data: data[testCategory] });
     }
   });
 

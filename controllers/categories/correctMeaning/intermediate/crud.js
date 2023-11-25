@@ -1,5 +1,5 @@
 const CorrectMeaningIntermediate = require("../../../../models/categories/correctMeaning/intermediate");
-const TestCorrectMeaningIntermediate = require("../../../../models/test/correctMeaning/intermediate");
+const TestCorrectMeaningIntermediate = require("../../../../models/tests/correctMeaning/intermediate");
 
 const slugify = require("slugify");
 const formidable = require("formidable");

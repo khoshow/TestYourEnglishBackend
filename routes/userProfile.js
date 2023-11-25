@@ -14,7 +14,7 @@ const {
   profileUpdateState,
   profileUpdateAbout,
   profileUpdatePhoto,
-} = require("../controllers/profile");
+} = require("../controllers/userInfo/profile");
 // const {tempPhoto, getTempPhoto} = require("../controllers/temporaryProfile")
 // const {forgotPasswordValidator, resetPasswordValidator} = require("../validators/auth")
 // // validators

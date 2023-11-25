@@ -44,14 +44,3 @@ exports.getUserScoreCorrectWordIntermediate = (req, res) => {
       res.status(500).json({ error: errorMessage });
     });
 };
-
-exports.getUserProfile = (req, res) => {
-  const userId = req.params.user;
-  User.findById(userId)
-    .then((user) => {
-      res.json(user);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: "Internal Server Error" });
-    });
-};
