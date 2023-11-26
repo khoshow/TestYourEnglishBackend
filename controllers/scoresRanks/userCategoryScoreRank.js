@@ -30,7 +30,7 @@ exports.getUserScoreCorrectWordIntermediate = (req, res) => {
         //       : "N/A",
         // },
       };
-      
+
       res.json(userScores);
     })
     .catch((err) => {

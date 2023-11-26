@@ -17,6 +17,22 @@ exports.getCategoryRanking = (req, res) => {
       rankQuery = "correctWordAdvanced.score";
       selectQuery = "correctWordAdvanced";
       break;
+    case "ranking-correct-meaning-intermediate":
+      rankQuery = "correctMeaningIntermediate.score";
+      selectQuery = "correctMeaningIntermediate";
+      break;
+    case "ranking-correct-meaning-advanced":
+      rankQuery = "correctMeaningAdvanced.score";
+      selectQuery = "correctMeaningAdvanced";
+      break;
+    case "ranking-synonyms-intermediate":
+      rankQuery = "synonymsIntermediate.score";
+      selectQuery = "synonymsIntermediate";
+      break;
+    case "ranking-synonyms-advanced":
+      rankQuery = "synonymsAdvanced.score";
+      selectQuery = "synonymsAdvanced";
+      break;
     default:
       rankQuery = "correctWordIntermediate.score";
       selectQuery = "correctWordIntermediate";
@@ -39,8 +55,8 @@ exports.getCategoryRanking = (req, res) => {
         const userId = item.user._id;
         const name = item.user.name;
         const username = item.user.username;
-        const score = item.correctWordIntermediate.score;
-        const rank = item.correctWordIntermediate.rank;
+        const score = item[selectQuery].score;
+        const rank = item[selectQuery].rank;
         const photoUrl = item.user.photoUrl;
 
         const processedItem = {

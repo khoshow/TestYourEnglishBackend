@@ -3,7 +3,7 @@ const UserScores = require("../../models/userScores/scores");
 exports.testGiven = (req, res) => {
   const slug = req.params.slug;
   const keyValuePairs = slug.split("&");
-
+  // hello
   // Create an object from the key-value pairs
   const paramsObject = keyValuePairs.reduce((acc, pair) => {
     const [key, value] = pair.split("=");
@@ -11,24 +11,78 @@ exports.testGiven = (req, res) => {
     return acc;
   }, {});
 
-  console.log("Param Obj", paramsObject);
+  console.log("Param Obj here test here", paramsObject);
   let testCategory;
   let selectQuery;
   let selectQuery2;
   let testNo;
-  //   let sortQuery = {};
-  //   sortQuery[rankQuery] = 1;
 
   switch (paramsObject.testCategory) {
     case "correct-word-intermediate":
       testCategory = "correctWordIntermediate";
-      selectQuery = "correctWordIntermediate.testArray";
-      selectQuery2 = "correctWordIntermediate.testArray.$";
+      selectQuery = {
+        "correctWordIntermediate.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "correctWordIntermediate.testArray.$": 1 };
       break;
     case "correct-word-advanced":
       testCategory = "correctWordAdvanced";
-      selectQuery = "correctWordAdvanced.testArray";
-      selectQuery2 = "correctWordAdvanced.testArray.$";
+      selectQuery = {
+        "correctWordAdvanced.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "correctWordAdvanced.testArray.$": 1 };
+      break;
+    case "correct-meaning-intermediate":
+      testCategory = "correctMeaningIntermediate";
+      selectQuery = {
+        "correctMeaningIntermediate.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "correctMeaningIntermediate.testArray.$": 1 };
+      break;
+    case "correct-meaning-advanced":
+      testCategory = "correctMeaningAdvanced";
+      selectQuery = {
+        "correctMeaningAdvanced.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "correctMeaningAdvanced.testArray.$": 1 };
+      break;
+    case "synonyms-intermediate":
+      testCategory = "synonymsIntermediate";
+      selectQuery = {
+        "synonymsIntermediate.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "synonymsIntermediate.testArray.$": 1 };
+      break;
+    case "synonyms-advanced":
+      testCategory = "synonymsAdvanced";
+      selectQuery = {
+        "synonymsAdvanced.testArray": {
+          $elemMatch: {
+            testNumber: paramsObject.testNo,
+          },
+        },
+      };
+      selectQuery2 = { "synonymsAdvanced.testArray.$": 1 };
       break;
     default:
       testCategory = "correctWordIntermediate";
@@ -36,74 +90,17 @@ exports.testGiven = (req, res) => {
       selectQuery2 = "correctWordIntermediate.testArray.$";
   }
 
-  //   UserScores.find({
-  //     user: req.user._id,
-  //     "correctWordIntermediate.testArray": {
-  //       $elemMatch: { testNumber: paramsObject.testNo },
-  //     },
-  //   }).then((data) => {
-  //     console.log("Is this a data", data[0]);
-  //     if (!data[0]) {
-  //       const testInfo = data[0];
-  //       console.log("Test Give2", testInfo);
-  //       res.json({ attempt: false });
-  //     } else {
-  //       res.json({ attempt: true,  });
-  //     }
-  //   });
-  console.log("Test Cat", testCategory);
-  console.log("testQuery", selectQuery);
-  console.log("slectquery2", selectQuery2);
   UserScores.findOne(
     {
       user: req.user._id,
-      selectQuery: {
-        $elemMatch: {
-          testNumber: paramsObject.testNo,
-        },
-      },
+      ...selectQuery,
     },
-    {
-      selectQuery2: 1,
-    }
+    selectQuery2
   ).then((data) => {
-    console.log("Test Given Status", data);
     if (!data) {
       res.json({ attempt: false });
     } else {
       res.json({ attempt: true, data: data[testCategory] });
     }
   });
-
-  //   UserScores.aggregate([
-  //     {
-  //       $match: {
-  //         user: req.user._id,
-  //         "correctWordIntermediate.testArray": { $exists: true, $ne: [] },
-  //       },
-  //     },
-  //     {
-  //       $addFields: {
-  //         "correctWordIntermediate.testArray": {
-  //           $filter: {
-  //             input: "$correctWordIntermediate.testArray",
-  //             as: "testItem",
-  //             cond: { $eq: ["$$testItem.testNumber", 1] },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   ]).then((data) => {
-  //     console.log("Any2 data", data);
-  //   });
-
-  //   UserScores.countDocuments()
-  //     .then((count) => {
-  //       console.log("count", count);
-  //       res.json(count);
-  //     })
-  //     .catch((err) => {
-  //       console.error("my err", err);
-  //       res.status(500).json({ error: err });
-  //     });
 };

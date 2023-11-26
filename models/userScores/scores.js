@@ -56,20 +56,10 @@ const correctWordAdvancedSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rightlyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectWordAdvanced",
-      },
-    ],
-    wronglyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectWordAdvanced",
-      },
-    ],
+    rightlyAnsweredQuestions: {},
+    wronglyAnsweredQuestions: {},
 
-    scores: {},
+    scores: { type: Number },
     rank: {
       type: Number,
     },
@@ -88,6 +78,7 @@ const correctMeaningIntermediateSchema = new Schema(
     testNumber: {
       type: Number,
     },
+
     score: {
       type: Number,
     },
@@ -95,20 +86,19 @@ const correctMeaningIntermediateSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rightlyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectMeaningIntermediate",
-      },
-    ],
-    wronglyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectMeaningIntermediate",
-      },
-    ],
+    rightlyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question. See controller for reference
+    },
 
-    scores: {},
+    wronglyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question
+    },
+
+    scores: { type: Number },
     rank: {
       type: Number,
     },
@@ -127,6 +117,7 @@ const correctMeaningAdvancedSchema = new Schema(
     testNumber: {
       type: Number,
     },
+
     score: {
       type: Number,
     },
@@ -134,20 +125,19 @@ const correctMeaningAdvancedSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rightlyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectMeaningAdvanced",
-      },
-    ],
-    wronglyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestCorrectMeaningAdvanced",
-      },
-    ],
+    rightlyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question. See controller for reference
+    },
 
-    scores: {},
+    wronglyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question
+    },
+
+    scores: { type: Number },
     rank: {
       type: Number,
     },
@@ -166,6 +156,7 @@ const synonymsIntermediateSchema = new Schema(
     testNumber: {
       type: Number,
     },
+
     score: {
       type: Number,
     },
@@ -173,20 +164,19 @@ const synonymsIntermediateSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rightlyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestSynonymsIntermediate",
-      },
-    ],
-    wronglyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestSynonymsIntermediate",
-      },
-    ],
+    rightlyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question. See controller for reference
+    },
 
-    scores: {},
+    wronglyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question
+    },
+
+    scores: { type: Number },
     rank: {
       type: Number,
     },
@@ -200,11 +190,12 @@ const synonymsAdvancedSchema = new Schema(
   {
     testId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "TestSynonymsAdvanced",
+      ref: "SynonymsAdvanced",
     },
     testNumber: {
       type: Number,
     },
+
     score: {
       type: Number,
     },
@@ -212,20 +203,19 @@ const synonymsAdvancedSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rightlyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestSynonymsAdvanced",
-      },
-    ],
-    wronglyAnswered: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TestSynonymsAdvanced",
-      },
-    ],
+    rightlyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question. See controller for reference
+    },
 
-    scores: {},
+    wronglyAnsweredQuestions: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "TestCorrectWordIntermediate",
+      // When writing into this, save it with the id of the specific question
+    },
+
+    scores: { type: Number },
     rank: {
       type: Number,
     },
@@ -265,7 +255,11 @@ const userScoreSchema = new Schema({
     testArray: [correctWordIntermediateSchema],
   },
   correctWordAdvanced: {
-    score: { type: Number },
+    score: { type: Number, default: 0 },
+    rank: {
+      type: Number,
+    },
+    noOfUsers: { type: Number },
     testArray: [correctWordAdvancedSchema],
   },
 
@@ -278,7 +272,11 @@ const userScoreSchema = new Schema({
     testArray: [correctMeaningIntermediateSchema],
   },
   correctMeaningAdvanced: {
-    score: { type: Number },
+    score: { type: Number, default: 0 },
+    rank: {
+      type: Number,
+    },
+    noOfUsers: { type: Number },
     testArray: [correctMeaningAdvancedSchema],
   },
 
@@ -291,7 +289,11 @@ const userScoreSchema = new Schema({
     testArray: [synonymsIntermediateSchema],
   },
   synonymsAdvanced: {
-    score: { type: Number },
+    score: { type: Number, default: 0 },
+    rank: {
+      type: Number,
+    },
+    noOfUsers: { type: Number },
     testArray: [synonymsAdvancedSchema],
   },
 });

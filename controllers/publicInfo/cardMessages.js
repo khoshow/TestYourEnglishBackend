@@ -1,7 +1,7 @@
 const CardMessages = require("../../models/cardMessages");
 
 exports.getCardMessages = async (req, res) => {
-  console.log("Card mess called");
+
   try {
     const result = await CardMessages.aggregate([
       { $unwind: "$quotes" }, // Destructure the 'quotes' array
@@ -28,7 +28,7 @@ exports.getCorrectMessages = async (req, res) => {
       (item) => item.whenCorrectMessages
     );
 
-    console.log("10 random", randomCorrectMessages);
+   
     res.json(randomCorrectMessages);
   } catch (error) {
     console.error("Error querying data:", error);
@@ -46,7 +46,6 @@ exports.getWrongMessages = async (req, res) => {
 
     const randomWrongMessages = result.map((item) => item.whenWrongMessages);
 
-    console.log("10 random", randomWrongMessages);
     res.json(randomWrongMessages);
   } catch (error) {
     console.error("Error querying data:", error);
