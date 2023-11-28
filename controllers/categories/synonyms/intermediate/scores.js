@@ -58,7 +58,6 @@ exports.updateScore = async (req, res) => {
 
 exports.getTestData = (req, res) => {
   
-  console.log();
   UserScore.find({ user: req.params.slug })
     .then((data) => {
       res.json(data);

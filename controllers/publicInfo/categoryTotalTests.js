@@ -6,10 +6,10 @@ const TestSynonymsIntermediate = require("../../models/tests/synonyms/intermedia
 const TestSynonymsAdvanced = require("../../models/tests/synonyms/advanced");
 
 exports.getTotalTestsNoCorrectWordIntermediate = (req, res) => {
-  console.log("Hello hhh");
+ 
   TestCorrectWordIntermediate.countDocuments()
     .then((count) => {
-      console.log("count", count);
+      
       res.json(count);
     })
     .catch((err) => {
@@ -19,10 +19,10 @@ exports.getTotalTestsNoCorrectWordIntermediate = (req, res) => {
 };
 
 exports.getTotalTestsNoCorrectWordAdvanced = (req, res) => {
-  console.log("Hello hhh");
+
   TestCorrectWordAdvanced.countDocuments()
     .then((count) => {
-      console.log("count", count);
+     
       res.json(count);
     })
     .catch((err) => {
@@ -32,10 +32,10 @@ exports.getTotalTestsNoCorrectWordAdvanced = (req, res) => {
 };
 
 exports.getTotalTestsNoCorrectMeaningIntermediate = (req, res) => {
-  console.log("Hello hhh");
+
   TestCorrectMeaningIntermediate.countDocuments()
     .then((count) => {
-      console.log("count", count);
+     
       res.json(count);
     })
     .catch((err) => {
@@ -45,23 +45,23 @@ exports.getTotalTestsNoCorrectMeaningIntermediate = (req, res) => {
 };
 
 exports.getTotalTestsNoCorrectMeaningAdvanced = (req, res) => {
-  console.log("Hello hhh");
+  
   TestCorrectMeaningAdvanced.countDocuments()
     .then((count) => {
-      console.log("count", count);
+ 
       res.json(count);
     })
     .catch((err) => {
-      console.error("my err", err);
+     
       res.status(500).json({ error: err });
     });
 };
 
 exports.getTotalTestsNoSynonymsIntermediate = (req, res) => {
-  console.log("Hello hhh");
+  
   TestSynonymsIntermediate.countDocuments()
     .then((count) => {
-      console.log("count", count);
+   
       res.json(count);
     })
     .catch((err) => {
@@ -71,10 +71,10 @@ exports.getTotalTestsNoSynonymsIntermediate = (req, res) => {
 };
 
 exports.getTotalTestsNoSynonymsAdvanced = (req, res) => {
-  console.log("Hello hhh");
+
   TestSynonymsAdvanced.countDocuments()
     .then((count) => {
-      console.log("count", count);
+
       res.json(count);
     })
     .catch((err) => {

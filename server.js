@@ -28,8 +28,7 @@ const app = express();
 app.use(express.static(__dirname + "/public"));
 
 let productionOrDevelopment;
-console.log("prod or ", process.env.NODE_ENV);
-console.log("Ur", process.env.DATABASE_LOCAL);
+
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
 } else if (process.env.NODE_ENV == "development") {
@@ -48,7 +47,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "*", // Set the appropriate origin or '*' for any origin (be cautious with '*')
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
+  })
+);
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);

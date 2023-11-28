@@ -25,7 +25,7 @@ exports.getPublicUserScore = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };

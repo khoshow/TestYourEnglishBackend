@@ -11,7 +11,6 @@ exports.testGiven = (req, res) => {
     return acc;
   }, {});
 
-  console.log("Param Obj here test here", paramsObject);
   let testCategory;
   let selectQuery;
   let selectQuery2;

@@ -58,7 +58,7 @@ exports.profileUpdateName = (req, res) => {
 exports.profileUpdateUsername = (req, res) => {
   const userId = req.user._id;
   const newUsername = req.body.newUsername;
-  console.log("Username", req.body.newUsername);
+ 
   User.findByIdAndUpdate(userId, { username: newUsername }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
@@ -144,7 +144,7 @@ exports.profileUpdateState = (req, res) => {
   User.findByIdAndUpdate(userId, { state: newState }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.state}`);
+       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -161,7 +161,7 @@ exports.profileUpdateAbout = (req, res) => {
   User.findByIdAndUpdate(userId, { about: newAbout }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        console.log(`User's name updated to: ${updatedUser.about}`);
+        
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -195,7 +195,7 @@ cloudinary.config({
 
 exports.profileUpdatePhoto = async (req, res) => {
   const userId = req.user._id;
-  console.log("user", userId);
+ 
 
   try {
     upload.single("photo")(req, res, async (err) => {

@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
 
   const docCount = await TestSynonymsAdvanced.countDocuments()
     .then((count) => {
-      console.log("Count", count);
+    
       return count;
     })
     .catch((error) => {
@@ -40,16 +40,14 @@ exports.create = async (req, res) => {
 
   const addToTest1 = async (data) => {
     let questionNoLength;
-    console.log("data", data);
+  
     if (data === null) {
       questionNoLength = 0;
      
     } else {
       questionNoLength = data.questionNo.length;
     }
-    console.log("last Data", data);
-    console.log("last Data length of Questions", questionNoLength);
-    console.log("Doc Count", docCount);
+    
     const newQuestion = {
       question: question,
       correctOption: correctOption,
@@ -63,7 +61,7 @@ exports.create = async (req, res) => {
       await data
         .save()
         .then((data) => {
-          console.log("Question added to questionNo array:", newQuestion);
+         
           res.json(data);
         })
         .catch((err) => {
@@ -71,7 +69,7 @@ exports.create = async (req, res) => {
         }); // Save the updated data
     } else if (questionNoLength !== 0 && data.questionNo.length == 4) {
       const modelLength = TestSynonymsAdvanced.length;
-      console.log("modelLength", modelLength);
+  
       let newNumber = docCount + 1;
       const newQuizData = {
         testNo: "Test: " + newNumber,
@@ -81,7 +79,7 @@ exports.create = async (req, res) => {
       const addToTest = new TestSynonymsAdvanced(newQuizData);
 
       const savedData = await addToTest.save();
-      console.log("Add a new test", savedData);
+    
       res.json(savedData);
     } else {
       const newQuizData = {
@@ -91,7 +89,7 @@ exports.create = async (req, res) => {
 
       const addToTest = new TestSynonymsAdvanced(newQuizData);
       const savedData = await addToTest.save();
-      console.log("Create the first test", savedData);
+     
       res.json(savedData);
     }
   };
@@ -142,7 +140,7 @@ exports.getTestNo = async (req, res) => {
           "Ooops! Seems like you are trying to explore something which is still unavailable.",
       });
     }
-    console.log("Doc", documents);
+    
     res.json(documents);
   } catch (err) {
     console.error(err);

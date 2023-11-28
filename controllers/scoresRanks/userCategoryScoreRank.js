@@ -35,7 +35,7 @@ exports.getUserScoreCorrectWordIntermediate = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+    
       res.status(500).json({ error: errorMessage });
     });
 };
@@ -62,7 +62,7 @@ exports.getUserScoreCorrectWordAdvanced = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };
@@ -90,7 +90,7 @@ exports.getUserScoreCorrectMeaningIntermediate = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };
@@ -118,7 +118,7 @@ exports.getUserScoreCorrectMeaningAdvanced = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };
@@ -145,7 +145,7 @@ exports.getUserScoreSynonymsIntermediate = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };
@@ -171,7 +171,7 @@ exports.getUserScoreSynonymsAdvanced = (req, res) => {
     })
     .catch((err) => {
       const errorMessage = err.message || "Internal Server Error";
-      console.log("error hello", errorMessage);
+     
       res.status(500).json({ error: errorMessage });
     });
 };
