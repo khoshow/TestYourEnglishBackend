@@ -25,8 +25,27 @@ const testGivenOrNot = require("./routes/private/testGivenOrNot");
 const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 
 const app = express();
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://test-my-english-online-frontend.vercel.app"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 app.use(express.static(__dirname + "/public"));
-app.options("*", cors());
+
 let productionOrDevelopment;
 
 if (process.env.NODE_ENV == "production") {
