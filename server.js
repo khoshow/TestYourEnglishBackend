@@ -49,7 +49,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "*", // Set the appropriate origin or '*' for any origin (be cautious with '*')
+    origin: "https://test-my-english-online-frontend.vercel.app", // Set the appropriate origin or '*' for any origin (be cautious with '*')
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
   })
