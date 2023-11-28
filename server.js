@@ -26,7 +26,7 @@ const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 
 const app = express();
 app.use(express.static(__dirname + "/public"));
-
+app.options("*", cors());
 let productionOrDevelopment;
 
 if (process.env.NODE_ENV == "production") {
