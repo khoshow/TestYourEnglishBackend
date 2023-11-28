@@ -177,14 +177,7 @@ cloudinary.config({
   api_key: "774751474439835",
   api_secret: "***************************",
 });
-const storage = multer.diskStorage({
-  destination: "./uploads",
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
 
-const upload = multer({ storage: storage });
 
 
 cloudinary.config({
