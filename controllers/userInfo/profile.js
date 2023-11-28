@@ -208,7 +208,7 @@ exports.profileUpdatePhoto = async (req, res) => {
                 console.error("Error uploading image to Cloudinary:", error);
                 reject(error);
               } else {
-                console.log("Image uploaded to Cloudinary:", result);
+                console.log("Image uploaded to Cloudinary 2:", result);
                 resolve(result);
               }
             }
