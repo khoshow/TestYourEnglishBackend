@@ -1,5 +1,5 @@
 const User = require("../../models/user");
-const multer = require("multer");
+
 const fs = require("fs-extra");
 const cloudinary = require("cloudinary").v2;
 const jwt = require("jsonwebtoken");
@@ -168,18 +168,6 @@ cloudinary.config({
   api_key: "774751474439835",
   api_secret: "***************************",
 });
-<<<<<<< HEAD
-
-=======
-// const storage = multer.diskStorage({
-//   destination: "/tmp/uploads",
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
->>>>>>> ff0860fb977f9ea2d9ba02d429175e932ff8b212
-
-// const upload = multer({ storage: storage });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_KEY,
