@@ -25,33 +25,23 @@ const testGivenOrNot = require("./routes/private/testGivenOrNot");
 const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 
 const app = express();
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://test-my-english-online-frontend.vercel.app"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-
-  // Handle preflight requests
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
+app.use(
+  cors({
+    origin: "https://test-my-english-online-frontend.vercel.app", // Set the appropriate origin or '*' for any origin (be cautious with '*')
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
+  })
+);
 app.use(express.static(__dirname + "/public"));
 app.options("*", cors());
 let productionOrDevelopment;
 
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
+  console.log("ProducDev Connect string", productionOrDevelopment);
 } else if (process.env.NODE_ENV == "development") {
   productionOrDevelopment = process.env.DATABASE_LOCAL;
+  console.log("I am in local string", productionOrDevelopment);
 }
 
 mongoose
@@ -65,14 +55,6 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-app.use(
-  cors({
-    origin: "https://test-my-english-online-frontend.vercel.app", // Set the appropriate origin or '*' for any origin (be cautious with '*')
-    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
-  })
-);
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
