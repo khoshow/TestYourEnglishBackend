@@ -10,7 +10,6 @@ exports.profileUpdateStatus = (req, res) => {
   User.findByIdAndUpdate(userId, { status: newStatus }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -27,7 +26,6 @@ exports.profileUpdateMessage = (req, res) => {
   User.findByIdAndUpdate(userId, { message: newMessage }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-      
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -44,7 +42,6 @@ exports.profileUpdateName = (req, res) => {
   User.findByIdAndUpdate(userId, { name: newName }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-   
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -58,11 +55,10 @@ exports.profileUpdateName = (req, res) => {
 exports.profileUpdateUsername = (req, res) => {
   const userId = req.user._id;
   const newUsername = req.body.newUsername;
- 
+
   User.findByIdAndUpdate(userId, { username: newUsername }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-      
         const token = jwt.sign(
           { _id: updatedUser._id },
           process.env.JWT_SECRET,
@@ -93,7 +89,6 @@ exports.profileUpdateSex = (req, res) => {
   User.findByIdAndUpdate(userId, { Sex: newSex }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-      
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -110,7 +105,6 @@ exports.profileUpdateDob = (req, res) => {
   User.findByIdAndUpdate(userId, { dob: newDob }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -127,7 +121,6 @@ exports.profileUpdateCountry = (req, res) => {
   User.findByIdAndUpdate(userId, { country: newCountry }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-      
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -144,7 +137,6 @@ exports.profileUpdateState = (req, res) => {
   User.findByIdAndUpdate(userId, { state: newState }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-       
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -161,7 +153,6 @@ exports.profileUpdateAbout = (req, res) => {
   User.findByIdAndUpdate(userId, { about: newAbout }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
-        
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -177,8 +168,18 @@ cloudinary.config({
   api_key: "774751474439835",
   api_secret: "***************************",
 });
+<<<<<<< HEAD
 
+=======
+// const storage = multer.diskStorage({
+//   destination: "/tmp/uploads",
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+>>>>>>> ff0860fb977f9ea2d9ba02d429175e932ff8b212
 
+// const upload = multer({ storage: storage });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_KEY,
@@ -188,7 +189,6 @@ cloudinary.config({
 
 exports.profileUpdatePhoto = async (req, res) => {
   const userId = req.user._id;
- 
 
   try {
     upload.single("photo")(req, res, async (err) => {
@@ -212,7 +212,7 @@ exports.profileUpdatePhoto = async (req, res) => {
                 console.error("Error uploading image to Cloudinary:", error);
                 reject(error);
               } else {
-                console.log("Image uploaded to Cloudinary:", result);
+                console.log("Image uploaded to Cloudinary 2:", result);
                 resolve(result);
               }
             }

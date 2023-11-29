@@ -45,7 +45,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(__dirname + "/public"));
-
+app.options("*", cors());
 let productionOrDevelopment;
 
 if (process.env.NODE_ENV == "production") {
