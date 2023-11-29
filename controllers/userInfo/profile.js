@@ -1,5 +1,5 @@
 const User = require("../../models/user");
-
+const multer = require("multer");
 const fs = require("fs-extra");
 const cloudinary = require("cloudinary").v2;
 const jwt = require("jsonwebtoken");
@@ -164,19 +164,21 @@ exports.profileUpdateAbout = (req, res) => {
 };
 
 cloudinary.config({
-  cloud_name: "dreunylt8",
-  api_key: "774751474439835",
-  api_secret: "***************************",
-});
-
-cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_KEY,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
+const storage = multer.diskStorage({
+  destination: "/tmp/uploads",
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
+const upload = multer({ storage: storage });
 exports.profileUpdatePhoto = async (req, res) => {
   const userId = req.user._id;
+  console.log("user", userId);
 
   try {
     upload.single("photo")(req, res, async (err) => {
@@ -197,10 +199,10 @@ exports.profileUpdatePhoto = async (req, res) => {
             { folder: "/testMyEnglishOnline/Profile" }, // Replace with your desired folder name
             (error, result) => {
               if (error) {
-                console.error("Error uploading image to Cloudinary:", error);
+                // console.error("Error uploading image to Cloudinary:", error);
                 reject(error);
               } else {
-                console.log("Image uploaded to Cloudinary 2: check", result);
+                // console.log("Image uploaded to Cloudinary:", result);
                 resolve(result);
               }
             }

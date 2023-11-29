@@ -25,24 +25,33 @@ const testGivenOrNot = require("./routes/private/testGivenOrNot");
 const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://test-my-english-online-frontend.vercel.app", // Set the appropriate origin or '*' for any origin (be cautious with '*')
-    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
-  })
-);
-app.use(express.static(__dirname + "/public"));
-app.options("*", cors());
 let productionOrDevelopment;
-
+let clientUrl;
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
-  console.log("ProducDev Connect string", productionOrDevelopment);
+  clientUrl = process.env.CLIENT_URL;
+
+  app.use(
+    cors({
+      origin: clientUrl, // Set the appropriate origin or '*' for any origin (be cautious with '*')
+      methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
+      allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
+    })
+  );
 } else if (process.env.NODE_ENV == "development") {
   productionOrDevelopment = process.env.DATABASE_LOCAL;
-  console.log("I am in local string", productionOrDevelopment);
+
+  app.use(
+    cors({
+      origin: "*", // Set the appropriate origin or '*' for any origin (be cautious with '*')
+      methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
+      allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
+    })
+  );
 }
+
+app.use(express.static(__dirname + "/public"));
+app.options("*", cors());
 
 mongoose
   .connect(productionOrDevelopment)
