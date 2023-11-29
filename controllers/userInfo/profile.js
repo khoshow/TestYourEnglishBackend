@@ -121,6 +121,10 @@ exports.profileUpdateCountry = (req, res) => {
   User.findByIdAndUpdate(userId, { country: newCountry }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
+        const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie("token", token, { expiresIn: "1d" });
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -137,6 +141,10 @@ exports.profileUpdateState = (req, res) => {
   User.findByIdAndUpdate(userId, { state: newState }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
+        const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie("token", token, { expiresIn: "1d" });
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -153,6 +161,10 @@ exports.profileUpdateAbout = (req, res) => {
   User.findByIdAndUpdate(userId, { about: newAbout }, { new: true })
     .then((updatedUser) => {
       if (updatedUser) {
+        const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie("token", token, { expiresIn: "1d" });
         res.json(updatedUser);
       } else {
         console.log("User not found");
@@ -220,7 +232,16 @@ exports.profileUpdatePhoto = async (req, res) => {
       );
 
       if (updatedUser) {
-        res.json(updatedUser);
+        const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie("token", token, { expiresIn: "1d" });
+        const { _id, username, name, email, role, photoUrl } = updatedUser;
+
+        res.json({
+          token,
+          updatedUser: { _id, username, name, email, role, photoUrl },
+        });
       } else {
         console.log("User not found");
       }
