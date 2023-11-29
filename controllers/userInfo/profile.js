@@ -168,12 +168,16 @@ cloudinary.config({
   api_key: "774751474439835",
   api_secret: "***************************",
 });
+<<<<<<< HEAD
+
+=======
 // const storage = multer.diskStorage({
 //   destination: "/tmp/uploads",
 //   filename: function (req, file, cb) {
 //     cb(null, Date.now() + "-" + file.originalname);
 //   },
 // });
+>>>>>>> ff0860fb977f9ea2d9ba02d429175e932ff8b212
 
 // const upload = multer({ storage: storage });
 
