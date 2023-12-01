@@ -32,6 +32,8 @@ if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
   clientUrl = process.env.CLIENT_URL;
   clientUrlWithoutWWW = process.env.CLIENT_URL_WITHOUT_WWW;
+  console.log("URL 1", clientUrl);
+  console.log("URL 2", clientUrlWithoutWWW);
 
   app.use(
     cors({
