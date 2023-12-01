@@ -9,14 +9,9 @@ const { errorHandler } = require("../../../../helpers/dbErrorHandler");
 
 exports.create = async (req, res) => {
   const { question, correctOption } = req.body;
-  const wrongOption1 = req.body.wrongOptions[0];
-  const wrongOption2 = req.body.wrongOptions[1];
-  const wrongOption3 = req.body.wrongOptions[2];
-  if (req.body.wrongOptions.length > 3) {
-    return res.status(400).json({
-      error: "Options more than 3. Only 3 wrong options allowed.",
-    });
-  }
+  const wrongOption1 = req.body.wrongOption1;
+  const wrongOption2 = req.body.wrongOption2;
+  const wrongOption3 = req.body.wrongOption3;
 
   let correctWord = new SynonymsAdvanced({
     question: question,
