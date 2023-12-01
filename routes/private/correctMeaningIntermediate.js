@@ -16,7 +16,6 @@ router.post(
   requireSignin,
   adminMiddleware,
 
-  correctWordValidator,
   create
 );
 router.get("/correct-meaning-intermediate", list);

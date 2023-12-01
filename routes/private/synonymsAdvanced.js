@@ -16,7 +16,7 @@ router.post(
   requireSignin,
   adminMiddleware,
 
-  correctWordValidator,
+
   create
 );
 router.get("/synonyms-advanced", list);

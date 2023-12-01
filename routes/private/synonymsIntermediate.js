@@ -16,7 +16,7 @@ router.post(
   requireSignin,
   adminMiddleware,
   // runValidation,
-  correctWordValidator,
+ 
   create
 );
 router.get("/synonyms-intermediate", list);

@@ -24,7 +24,7 @@ router.post(
   requireSignin,
   adminMiddleware,
 
-  correctWordValidator,
+
   create
 );
 router.get("/correct-word-advanced", list);
