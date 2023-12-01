@@ -27,13 +27,15 @@ const userCategoryScoreRank = require("./routes/public/userCategoryScoreRank");
 const app = express();
 let productionOrDevelopment;
 let clientUrl;
+let clientUrlWithoutWWW;
 if (process.env.NODE_ENV == "production") {
   productionOrDevelopment = process.env.DATABASE_CLOUD;
   clientUrl = process.env.CLIENT_URL;
+  clientUrlWithoutWWW = process.env.CLIENT_URL_WITHOUT_WWW;
 
   app.use(
     cors({
-      origin: clientUrl, // Set the appropriate origin or '*' for any origin (be cautious with '*')
+      origin: [clientUrl, clientUrlWithoutWWW], // Set the appropriate origin or '*' for any origin (be cautious with '*')
       methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"], // Specify the allowed HTTP methods
       allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
     })
