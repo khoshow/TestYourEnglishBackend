@@ -50,7 +50,7 @@ exports.create = async (req, res) => {
       wrongOption2: wrongOption2,
       wrongOption3: wrongOption3,
     };
-    if (questionNoLength !== 0 && data.questionNo.length < 4) {
+    if (questionNoLength !== 0 && data.questionNo.length < 8) {
       data.questionNo.push(newQuestion);
 
       await data
@@ -62,7 +62,7 @@ exports.create = async (req, res) => {
         .catch((err) => {
           console.log("Error", err);
         }); // Save the updated data
-    } else if (questionNoLength !== 0 && data.questionNo.length == 4) {
+    } else if (questionNoLength !== 0 && data.questionNo.length == 8) {
       const modelLength = TestCorrectMeaningIntermediate.length;
  
       let newNumber = docCount + 1;
