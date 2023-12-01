@@ -15,7 +15,7 @@ router.post(
   // expressjwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
   requireSignin,
   adminMiddleware,
-  runValidation,
+ 
   correctWordValidator,
   create
 );

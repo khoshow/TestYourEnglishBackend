@@ -23,7 +23,7 @@ router.post(
   "/correct-word-advanced",
   requireSignin,
   adminMiddleware,
-  runValidation,
+
   correctWordValidator,
   create
 );
