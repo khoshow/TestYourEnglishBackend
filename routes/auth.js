@@ -10,11 +10,11 @@ const {
   userSigninValidator,
 } = require("../validators/auth");
 
-const { preSignup, signup, signin, signout, requireSignin } = require("../controllers/auth");
+const { preSignup, signup, signin, signout, signupWithoutPreSignUp, requireSignin } = require("../controllers/auth");
 router.post('/signin', userSigninValidator, runValidation, signin);
 router.get('/signout', signout);
 // router.get("/username-availability/:slug", usernameAvailability)
 router.post("/pre-signup", userSignupValidator, runValidation, preSignup);
 router.post("/signup", signup);
-
+router.post("/without-pre-signup", userSignupValidator, runValidation, signupWithoutPreSignUp)
 module.exports = router;

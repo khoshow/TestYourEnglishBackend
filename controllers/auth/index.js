@@ -181,6 +181,38 @@ exports.signup = (req, res) => {
     });
   }
 };
+exports.signupWithoutPreSignUp = (req, res) => {
+  const { name, email, password } = req.body;
+  let username = shortId.generate();
+  console.log("Sign up without pre", username);
+  User.findOne({ email: email.toLowerCase() }).then((person) => {
+    if (person) {
+      return res.status(400).json({
+        error: "Email is taken",
+      });
+    }
+    let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+    const user = new User({
+      name,
+      email,
+      password,
+      profile,
+      username,
+    });
+    user
+      .save()
+      .then(() => {
+        res.json({
+          message: "Signup Success! Please sign in.",
+        });
+      })
+      .catch((err) => {
+        return res.status(401).json({
+          error: errorHandler(err),
+        });
+      });
+  });
+};
 
 exports.signin = (req, res) => {
   const { email, password } = req.body;

@@ -1,18 +1,16 @@
 const user = require("../../models/user");
 const UserScore = require("../../models/userScores/scores");
 
-
-
 exports.getPublicUserScore = (req, res) => {
-  const username = req.params.username
+  const username = req.params.username;
 
-  UserScore.findOne({ username })
+  UserScore.findOne({ user: username })
     .then((user) => {
-    
+  
       res.json(user);
     })
     .catch((err) => {
-      console.error("my err",err);
+      console.error("my err", err);
       res.status(500).json({ error: err });
     });
 };
