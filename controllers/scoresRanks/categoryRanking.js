@@ -2,11 +2,10 @@ const user = require("../../models/user");
 const UserScore = require("../../models/userScores/scores");
 
 exports.getCategoryRanking = (req, res) => {
+  console.log("Am i been called");
   const slug = req.params.slug;
   let rankQuery;
   let selectQuery;
-  let sortQuery = {};
-  sortQuery[rankQuery] = 1;
 
   switch (slug) {
     case "ranking-correct-word-intermediate":
@@ -39,6 +38,9 @@ exports.getCategoryRanking = (req, res) => {
   }
   const fieldToSelectScore = selectQuery + ".score";
   const fieldToSelectRank = selectQuery + ".rank";
+  let sortQuery = {};
+  sortQuery[rankQuery] = -1;
+
   UserScore.find()
     .sort(sortQuery)
     .select(fieldToSelectScore)
@@ -48,7 +50,6 @@ exports.getCategoryRanking = (req, res) => {
 
     .limit(10)
     .then((users) => {
-      // Now the 'users' array is sorted by correctWordIntermediate.rank in ascending order
       const processedData = [];
 
       users.forEach((item) => {
