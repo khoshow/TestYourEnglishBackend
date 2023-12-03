@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  getPublicUserScore,
+  getPublicUserScoreWithId,
+  getPublicUserScoreWithUsername,
 } = require("../../controllers/publicInfo/scoresRanking");
 
-const {getTotalTestsNoCorrectWordIntermediate,
+const {
+  getTotalTestsNoCorrectWordIntermediate,
   getTotalTestsNoCorrectWordAdvanced,
   getTotalTestsNoCorrectMeaningIntermediate,
   getTotalTestsNoCorrectMeaningAdvanced,
@@ -26,7 +28,11 @@ const {
 
 router.get("/get-category-ranking/:slug", getCategoryRanking);
 
-router.get("/public-display-user-scores/:username", getPublicUserScore);
+router.get("/public-display-user-scores/:userid", getPublicUserScoreWithId);
+router.get(
+  "/get-public-display-user-scores/:username",
+  getPublicUserScoreWithUsername
+);
 router.get(
   "/total-tests/correct-word-intermediate",
   getTotalTestsNoCorrectWordIntermediate

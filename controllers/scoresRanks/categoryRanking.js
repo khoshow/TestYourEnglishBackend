@@ -2,7 +2,7 @@ const user = require("../../models/user");
 const UserScore = require("../../models/userScores/scores");
 
 exports.getCategoryRanking = (req, res) => {
-  console.log("Am i been called");
+  
   const slug = req.params.slug;
   let rankQuery;
   let selectQuery;
